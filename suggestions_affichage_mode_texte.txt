@@ -1,0 +1,19 @@
+Suggestions pour l'affichage en mode texte :
+
+- Titre ou message de présentation
+
+- Séparer les lignes au maximum pour la lisibilité
+
+- Pour le tableau, utiliser des caractères comme +, - et | (ou des caractères spéciaux comme ─, ┼, │, └)
+  Ex : +---+---+---+      ┌───┬───┬───┐
+       |   |   |   |      │   │   │   │
+       +---+---+---+      ├───┼───┼───┤
+       |   |   |   |  ou  │   │   │   │
+       +---+---+---+      ├───┼───┼───┤
+       |   |   |   |      │   │   │   │
+       +---+---+---+      └───┴───┴───┘
+
+Les caractères spéciaux ne seront peut-être pas supportés, ou très difficiles à ajouter.
+
+- Choisir deux caractères facilement "distinguables" pour les jetons des deux joueurs.
+  Ou utiliser les codes couleurs, comme on est dans un environnement Linux ça devrait marcher.
