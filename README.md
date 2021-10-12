@@ -1,4 +1,4 @@
-# gtech1-b13-puissance4
+# gtech1-b23-puissance4
 Puissance 4 - C Project at Gaming Campus
 
 # Auteurs
