@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "table.h"
 
 
 // Boolean defines.
@@ -17,6 +17,11 @@ int scan_int();
 int main( void )
 {
 	bool player1 = true;
+	init_table();
+	afficher_table();
+
+
+
 
 	// Main game loop.
 	while ( true )
