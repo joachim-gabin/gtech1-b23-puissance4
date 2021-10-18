@@ -1,1 +1,1 @@
-gcc -o main -I . main.c table.c
+gcc -o main -I . main.c
