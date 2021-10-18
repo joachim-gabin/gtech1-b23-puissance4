@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "table.h"
+#include <string.h>
 
 
 // Boolean defines.
@@ -10,7 +10,15 @@
 #	define false 0
 #endif
 
-char tokens[]= "ox";
+#define NUM_ROWS 6
+#define NUM_COLUMNS 7
+
+char table[NUM_ROWS][NUM_COLUMNS];
+
+void init_table();
+void display_table();
+
+char tokens[] = "ox";
 
 
 int scan_int();
@@ -21,7 +29,7 @@ int main( void )
 {
 	int player = 0;
 	init_table();
-	afficher_table();
+	display_table();
 
 
 
@@ -36,7 +44,7 @@ int main( void )
 		tour ++;
 		if (tour==42)
 			break;
-		
+
 		// Toggle player.
 		player = player ^ 1;
 	}
@@ -52,4 +60,14 @@ int scan_int()
 		while ( getchar() != '\n' );
 	}
 	return r;
+}
+
+void init_table()
+{
+	memset( table, '.' , NUM_ROWS * NUM_COLUMNS );
+}
+
+void display_table()
+{
+	printf( table );
 }
