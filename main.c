@@ -14,7 +14,7 @@
 #define NUM_COLUMNS 7
 
 char table[NUM_ROWS][NUM_COLUMNS];
-
+-
 void init_table();
 void display_table();
 bool play( int player, int column );
@@ -29,6 +29,10 @@ int tour=0;
 
 int main( void )
 {
+
+	printf( "Welcome to Puissance 4 !\n");
+	printf( "Game size is %i x %i \n", NUM_ROWS , NUM_COLUMNS); 
+
 	int player = 0;
 	init_table();
 
