@@ -14,7 +14,7 @@
 #define NUM_COLUMNS 7
 
 char table[NUM_ROWS][NUM_COLUMNS];
--
+
 void init_table();
 void display_table();
 bool play( int player, int column );
@@ -77,7 +77,28 @@ void init_table()
 
 void display_table()
 {
-	printf( table );
+        for(int n=0;n<NUM_COLUMNS;n++){
+                printf("--");
+        }
+	putchar( '\n' );
+
+        for(int z=0;z<NUM_ROWS;z++){
+                for(int u=0;u<NUM_COLUMNS;u++){
+                        printf("%c ", table[z][u]);
+
+                }
+                putchar('\n');
+        }
+
+        for(int n=0;n<NUM_COLUMNS;n++){
+                printf("--");
+        }
+	putchar( '\n' );
+
+        for(int num=0;num<NUM_COLUMNS;num++){
+                printf("%i ",num + 1);
+        }
+	putchar( '\n' );
 }
 
 // Play a token in a column. The function traces down the column to find the first

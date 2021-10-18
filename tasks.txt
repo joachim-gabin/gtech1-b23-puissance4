@@ -4,6 +4,7 @@ OK - Faire une fonction pour afficher la grille.
 OK - Afficher la grille à chaque début de tour (avant de demander au joueur le numéro de colonne).
 OK - Faire une fonction "jouer dans colonne" et l'utiliser dans la boucle principale.
 - Faire une fonction pour détecter les combinaisions de 4 et l'utiliser dans la boucle.
+- Check si play() retourne false, et redemander le numéro de colonne si c'est le cas.
 
 Esthétique du code :
 - Rajouter des commentaires où il en manque (in ENGLISH please).
