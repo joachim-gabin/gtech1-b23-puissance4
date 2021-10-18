@@ -10,13 +10,16 @@
 #	define false 0
 #endif
 
+char tokens[]= "ox";
+
+
 int scan_int();
-
-
+bool win=false;
+int tour=0;
 
 int main( void )
 {
-	bool player1 = true;
+	int player = 0;
 	init_table();
 	afficher_table();
 
@@ -24,14 +27,18 @@ int main( void )
 
 
 	// Main game loop.
-	while ( true )
+	while ( ! win )
 	{
 		// Prompt the current player for a column index.
-		printf( "Player %i (%c), enter column number : ", player1 ? 1 : 2, player1 ? 'O' : 'X' );
+		printf( "Player %i (%c), enter column number : ", player + 1, tokens[player]);
 		int col = scan_int();
 
+		tour ++;
+		if (tour==42)
+			break;
+		
 		// Toggle player.
-		player1 = !player1;
+		player = player ^ 1;
 	}
 }
 
