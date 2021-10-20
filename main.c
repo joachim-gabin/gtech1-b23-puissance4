@@ -12,6 +12,7 @@ char table[NUM_ROWS][NUM_COLUMNS];
 
 void init_table();
 void display_table();
+void display_prompt( int player );
 void display_token( char token );
 const char* get_token_color( char token );
 int play( int player, int column );
@@ -26,7 +27,6 @@ int tour=0;
 
 int main( void )
 {
-
 	printf( "Welcome to Puissance 4 !\n");
 	printf( "Game size is %i x %i \n", NUM_ROWS , NUM_COLUMNS);
 
@@ -40,18 +40,24 @@ int main( void )
 	{
 		display_table();
 
-		// Prompt the current player for a column index.
-		printf( "Player %i (%s%c\033[0m), enter column number : ", player + 1, get_token_color( tokens[player] ), tokens[player] );
 		int col =  0;
 		int row = -1;
 
+		// This loops until the player has selected a non-empty column.
 		while (row == -1)
 		{
+			// Prompt the current player for a column index.
+			display_prompt( player );
+
 			col = scan_int();
 
+			// This loops until the player has selected a correct column index.
 			while (col < 1 || col > NUM_COLUMNS)
 			{
 				printf("You need to choose a number between 1 and %i\n", NUM_COLUMNS);
+
+				// Re-display prompt.
+				display_prompt( player );
 				col = scan_int();
 			}
 
@@ -80,7 +86,7 @@ int scan_int()
 	int r;
 	while ( scanf( "%i", &r ) != 1 )
 	{
-		printf( "You did not give a number.\nTry again : " );
+		printf( "You did not give a number. Try again : " );
 		while ( getchar() != '\n' );
 	}
 	return r;
@@ -120,6 +126,14 @@ void display_table()
 	putchar( '\n' );
 }
 
+// Display the prompt for entering the column number.
+// This displays a line with the player number (1 or 2), the token they're playing,
+// and the column range (between 1 and NUM_COLUMNS).
+void display_prompt( int player )
+{
+	printf( "Player %i (%s%c\033[0m), select column [1; %i] : ", player + 1, get_token_color( tokens[player] ), tokens[player], NUM_COLUMNS );
+}
+
 // Display the token with its corresponding color.
 void display_token( char token )
 {
@@ -151,7 +165,7 @@ int play( int player, int column )
 	// Is column full?
 	if ( table[0][column] != '.' )
 	{
-		printf( "Column %i is full! Please select another one : ", column + 1 );
+		printf( "Column %i is full! Please select another one.\n", column + 1 );
 		return -1;
 	}
 
