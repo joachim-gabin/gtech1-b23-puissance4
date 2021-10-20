@@ -41,11 +41,26 @@ int main( void )
 
 		// Prompt the current player for a column index.
 		printf( "Player %i (%s%c\033[0m), enter column number : ", player + 1, get_token_color( tokens[player] ), tokens[player] );
-		int col = scan_int() - 1;
-		int row = play( player, col );
+		int col =  0;
+		int row = -1;
+
+		while (row == -1){
+			col = scan_int() - 1;
+
+
+
+			while (col < 1 || col > NUM_COLUMNS){
+
+				printf("You need to choose a number between 1 and %i\n", NUM_COLUMNS);
+				col = scan_int() - 1;
+			}
+
+			row = play(player, col);
+		}
 
 		if ( test_win( table, tokens[player], row, col ) )
 		{
+			display_table();
 			printf("WIN!!!11!!1!!\n");
 			break;
 		}
@@ -153,3 +168,4 @@ int play( int player, int column )
 	table[i][column] = tokens[player];
 	return i;
 }
+
