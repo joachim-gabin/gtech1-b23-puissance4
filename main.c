@@ -4,15 +4,8 @@
 
 
 
-// Boolean defines.
-#ifndef __cplusplus
-#	define bool int
-#	define true 1
-#	define false 0
-#endif
-
-#define NUM_ROWS 6
-#define NUM_COLUMNS 7
+#include "puis4.h"
+#include "bool.h"
 
 char table[NUM_ROWS][NUM_COLUMNS];
 
@@ -20,7 +13,7 @@ void init_table();
 void display_table();
 void display_token( char token );
 const char* get_token_color( char token );
-bool play( int player, int column );
+int play( int player, int column );
 
 char tokens[] = "ox";
 
@@ -48,8 +41,14 @@ int main( void )
 
 		// Prompt the current player for a column index.
 		printf( "Player %i (%s%c\033[0m), enter column number : ", player + 1, get_token_color( tokens[player] ), tokens[player] );
-		int col = scan_int();
-		play( player, col );
+		int col = scan_int() - 1;
+		int row = play( player, col );
+
+		if ( test_win( table, tokens[player], row, col ) )
+		{
+			printf("WIN!!!11!!1!!\n");
+			break;
+		}
 
 		tour ++;
 		if (tour==42)
@@ -125,14 +124,17 @@ const char* get_token_color( char token )
 // "player" is either 0 or 1 (respectively player 1 or 2).
 // "column" is the zero-based index of the column to play in.
 //
+// This function returns the row index where the token landed, or -1 if the column
+// was full.
+//
 // NOTE : The function caller must first check if the column index is valid.
-bool play( int player, int column )
+int play( int player, int column )
 {
 	// Is column full?
 	if ( table[0][column] != '.' )
 	{
 		printf( "Column %i is full! Please select another one : ", column );
-		return false;
+		return -1;
 	}
 
 	// Find the index of the last empty slot in this column.
@@ -149,5 +151,5 @@ bool play( int player, int column )
 
 	// Set the token corresponding to the player.
 	table[i][column] = tokens[player];
-	return true;
+	return i;
 }
