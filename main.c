@@ -92,6 +92,9 @@ void display_table()
                 putchar('\n');
         }
 
+	// Reset color code.
+	printf( "\033[0m" );
+
         for(int n=0;n<NUM_COLUMNS;n++){
                 printf("--");
         }
