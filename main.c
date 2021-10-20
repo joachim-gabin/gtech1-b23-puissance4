@@ -45,21 +45,20 @@ int main( void )
 		int col =  0;
 		int row = -1;
 
-		while (row == -1){
-			col = scan_int() - 1;
+		while (row == -1)
+		{
+			col = scan_int();
 
-
-
-			while (col < 1 || col > NUM_COLUMNS){
-
+			while (col < 1 || col > NUM_COLUMNS)
+			{
 				printf("You need to choose a number between 1 and %i\n", NUM_COLUMNS);
-				col = scan_int() - 1;
+				col = scan_int();
 			}
 
-			row = play(player, col);
+			row = play(player, col - 1);
 		}
 
-		if ( test_win( (char*) table, tokens[player], row, col ) )
+		if ( test_win( (char*) table, tokens[player], row, col - 1 ) )
 		{
 			display_table();
 			printf("WIN!!!11!!1!!\n");
@@ -152,7 +151,7 @@ int play( int player, int column )
 	// Is column full?
 	if ( table[0][column] != '.' )
 	{
-		printf( "Column %i is full! Please select another one : ", column );
+		printf( "Column %i is full! Please select another one : ", column + 1 );
 		return -1;
 	}
 
