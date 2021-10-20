@@ -3,6 +3,7 @@
 #include <string.h>
 
 
+
 // Boolean defines.
 #ifndef __cplusplus
 #	define bool int
@@ -17,6 +18,8 @@ char table[NUM_ROWS][NUM_COLUMNS];
 
 void init_table();
 void display_table();
+void display_token( char token );
+const char* get_token_color( char token );
 bool play( int player, int column );
 
 char tokens[] = "ox";
@@ -31,11 +34,10 @@ int main( void )
 {
 
 	printf( "Welcome to Puissance 4 !\n");
-	printf( "Game size is %i x %i \n", NUM_ROWS , NUM_COLUMNS); 
+	printf( "Game size is %i x %i \n", NUM_ROWS , NUM_COLUMNS);
 
 	int player = 0;
 	init_table();
-
 
 
 
@@ -45,7 +47,7 @@ int main( void )
 		display_table();
 
 		// Prompt the current player for a column index.
-		printf( "Player %i (%c), enter column number : ", player + 1, tokens[player]);
+		printf( "Player %i (%s%c\033[0m), enter column number : ", player + 1, get_token_color( tokens[player] ), tokens[player] );
 		int col = scan_int();
 		play( player, col );
 
@@ -84,8 +86,8 @@ void display_table()
 
         for(int z=0;z<NUM_ROWS;z++){
                 for(int u=0;u<NUM_COLUMNS;u++){
-                        printf("%c ", table[z][u]);
-
+                        display_token( table[z][u] );
+			putchar( ' ' );
                 }
                 putchar('\n');
         }
@@ -101,12 +103,29 @@ void display_table()
 	putchar( '\n' );
 }
 
+// Display the token with its corresponding color.
+void display_token( char token )
+{
+	printf( get_token_color( token ) );
+	putchar( token );
+}
+
+const char* get_token_color( char token )
+{
+	switch ( token )
+	{
+	case 'o': return "\033[31m";
+	case 'x': return "\033[33m";
+	default:  return "\033[0m";
+	}
+}
+
 // Play a token in a column. The function traces down the column to find the first
 // empty slot from the bottom.
 // "player" is either 0 or 1 (respectively player 1 or 2).
 // "column" is the zero-based index of the column to play in.
 //
-// NOTE : The functin caller must first check if the column index is valid.
+// NOTE : The function caller must first check if the column index is valid.
 bool play( int player, int column )
 {
 	// Is column full?
