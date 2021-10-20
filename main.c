@@ -5,6 +5,7 @@
 
 
 #include "puis4.h"
+#include "winner.h"
 #include "bool.h"
 
 char table[NUM_ROWS][NUM_COLUMNS];
@@ -44,7 +45,7 @@ int main( void )
 		int col = scan_int() - 1;
 		int row = play( player, col );
 
-		if ( test_win( table, tokens[player], row, col ) )
+		if ( test_win( (char*) table, tokens[player], row, col ) )
 		{
 			printf("WIN!!!11!!1!!\n");
 			break;
@@ -105,7 +106,7 @@ void display_table()
 // Display the token with its corresponding color.
 void display_token( char token )
 {
-	printf( get_token_color( token ) );
+	fputs( get_token_color( token ), stdout );
 	putchar( token );
 }
 
