@@ -2,11 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 
-
-
 #include "puis4.h"
 #include "winner.h"
 #include "bool.h"
+
 
 char table[NUM_ROWS][NUM_COLUMNS];
 
@@ -73,6 +72,7 @@ int main( void )
 
 		tour ++;
 		if (tour==42)
+			printf("\nFinished ! There is no winner !")
 			break;
 
 		// Toggle player.
@@ -86,7 +86,7 @@ int scan_int()
 	int r;
 	while ( scanf( "%i", &r ) != 1 )
 	{
-		printf( "You did not give a number. Try again : " );
+		printf( "\nYou did not give a number. Try again : \n" );
 		while ( getchar() != '\n' );
 	}
 	return r;
