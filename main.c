@@ -52,7 +52,7 @@ int main( void )
 			// This loops until the player has selected a correct column index.
 			while (col < 1 || col > NUM_COLUMNS)
 			{
-				printf("You need to choose a number between 1 and %i\n", NUM_COLUMNS);
+				printf("\nYou need to choose a number between 1 and %i\n", NUM_COLUMNS);
 
 				// Re-display prompt.
 				display_prompt( player );
@@ -98,16 +98,26 @@ void init_table()
 	memset( table, '.' , NUM_ROWS * NUM_COLUMNS );
 }
 
-void display_table()
+void display_table_delimiter()
 {
-        for(int n=0;n<NUM_COLUMNS;n++){
+	for(int n=0;n<NUM_COLUMNS;n++){
                 printf("--");
         }
+	putchar( '-' );
+	putchar( '\n' );
+}
+
+void display_table()
+{
+	// Leave space before the grid.
 	putchar( '\n' );
 
-        for(int z=0;z<NUM_ROWS;z++){
-                for(int u=0;u<NUM_COLUMNS;u++){
-                        display_token( table[z][u] );
+        display_table_delimiter();
+
+        for(int r=0;r<NUM_ROWS;r++){
+		putchar( ' ' );
+                for(int c=0;c<NUM_COLUMNS;c++){
+                        display_token( table[r][c] );
 			putchar( ' ' );
                 }
                 putchar('\n');
@@ -116,14 +126,15 @@ void display_table()
 	// Reset color code.
 	printf( "\033[0m" );
 
-        for(int n=0;n<NUM_COLUMNS;n++){
-                printf("--");
-        }
-	putchar( '\n' );
+        display_table_delimiter();
 
+	// Display column numbers.
+	putchar( ' ' );
         for(int num=0;num<NUM_COLUMNS;num++){
                 printf("%i ",num + 1);
         }
+
+	putchar( '\n' );
 	putchar( '\n' );
 }
 
