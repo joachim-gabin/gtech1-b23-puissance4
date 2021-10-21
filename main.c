@@ -7,6 +7,7 @@
 #include "bool.h"
 
 
+
 char table[NUM_ROWS][NUM_COLUMNS];
 
 void init_table();
@@ -14,19 +15,19 @@ void display_table();
 void display_prompt( int player );
 void display_token( char token );
 const char* get_token_color( char token );
+
+int scan_int();
 int play( int player, int column );
 
 char tokens[] = "ox";
+int turn = 0;
 
 
-
-int scan_int();
-int tour=0;
 
 int main( void )
 {
-	printf( "Welcome to Puissance 4 !\n");
-	printf( "Game size is %i x %i \n", NUM_ROWS , NUM_COLUMNS);
+	printf( "Welcome to Puissance 4!\n" );
+	printf( "Game size is %i x %i\n", NUM_ROWS, NUM_COLUMNS );
 
 	int player = 0;
 	init_table();
@@ -42,7 +43,7 @@ int main( void )
 		int row = -1;
 
 		// This loops until the player has selected a non-empty column.
-		while (row == -1)
+		while ( row == -1 )
 		{
 			// Prompt the current player for a column index.
 			display_prompt( player );
@@ -50,29 +51,31 @@ int main( void )
 			col = scan_int();
 
 			// This loops until the player has selected a correct column index.
-			while (col < 1 || col > NUM_COLUMNS)
+			while ( col < 1 || col > NUM_COLUMNS )
 			{
-				printf("\nYou need to choose a number between 1 and %i\n", NUM_COLUMNS);
+				printf( "\nYou need to choose a number between 1 and %i\n", NUM_COLUMNS );
 
 				// Re-display prompt.
 				display_prompt( player );
 				col = scan_int();
 			}
 
-			row = play(player, col - 1);
+			row = play( player, col - 1 );
 		}
 
+		// Test if current player won by placing their token.
 		if ( test_win( (char*) table, tokens[player], row, col - 1 ) )
 		{
 			display_table();
-			printf("\n-----[ Player %s%i\033[0m wins! ]-----\n\n", get_token_color( tokens[player] ), player + 1);
+			printf( "\n-----[ Player %s%i\033[0m wins! ]-----\n\n", get_token_color( tokens[player] ), player + 1 );
 			break;
 		}
 
-		tour ++;
-		if (tour==42)
+		// If we filled the grid without anyone winning, it's a tie.
+		turn++;
+		if ( turn == NUM_ROWS * NUM_COLUMNS )
 		{
-			printf("\nFinished ! There is no winner !");
+			printf( "\nFinished! There is no winner!" );
 			break;
 		}
 
@@ -93,6 +96,7 @@ int scan_int()
 	return r;
 }
 
+// Fills the table with empty slots, marked by a '.'
 void init_table()
 {
 	memset( table, '.' , NUM_ROWS * NUM_COLUMNS );
@@ -100,13 +104,15 @@ void init_table()
 
 void display_table_delimiter()
 {
-	for(int n=0;n<NUM_COLUMNS;n++){
-                printf("--");
+	for ( int n = 0; n < NUM_COLUMNS; n++ )
+	{
+                printf( "--" );
         }
 	putchar( '-' );
 	putchar( '\n' );
 }
 
+// Displays the current state of the table.
 void display_table()
 {
 	// Leave space before the grid.
@@ -114,9 +120,11 @@ void display_table()
 
         display_table_delimiter();
 
-        for(int r=0;r<NUM_ROWS;r++){
+        for ( int r = 0; r < NUM_ROWS; r++ )
+	{
 		putchar( ' ' );
-                for(int c=0;c<NUM_COLUMNS;c++){
+                for ( int c = 0; c < NUM_COLUMNS; c++ )
+		{
                         display_token( table[r][c] );
 			putchar( ' ' );
                 }
@@ -130,8 +138,8 @@ void display_table()
 
 	// Display column numbers.
 	putchar( ' ' );
-        for(int num=0;num<NUM_COLUMNS;num++){
-                printf("%i ",num + 1);
+        for ( int num = 0; num < NUM_COLUMNS; num++ ){
+                printf( "%i ", num + 1 );
         }
 
 	putchar( '\n' );
@@ -171,7 +179,8 @@ const char* get_token_color( char token )
 // This function returns the row index where the token landed, or -1 if the column
 // was full.
 //
-// NOTE : The function caller must first check if the column index is valid.
+// NOTE : The function caller must first check if the column index is valid, as this
+// function does not do any checks.
 int play( int player, int column )
 {
 	// Is column full?
@@ -197,4 +206,3 @@ int play( int player, int column )
 	table[i][column] = tokens[player];
 	return i;
 }
-
