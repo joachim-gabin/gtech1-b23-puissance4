@@ -21,7 +21,6 @@ char tokens[] = "ox";
 
 
 int scan_int();
-bool win=false;
 int tour=0;
 
 int main( void )
@@ -35,7 +34,7 @@ int main( void )
 
 
 	// Main game loop.
-	while ( ! win )
+	while ( true )
 	{
 		display_table();
 
@@ -66,14 +65,16 @@ int main( void )
 		if ( test_win( (char*) table, tokens[player], row, col - 1 ) )
 		{
 			display_table();
-			printf("WIN!!!11!!1!!\n");
+			printf("\n-----[ Player %s%i\033[0m wins! ]-----\n\n", get_token_color( tokens[player] ), player + 1);
 			break;
 		}
 
 		tour ++;
 		if (tour==42)
-			printf("\nFinished ! There is no winner !")
+		{
+			printf("\nFinished ! There is no winner !");
 			break;
+		}
 
 		// Toggle player.
 		player = player ^ 1;
