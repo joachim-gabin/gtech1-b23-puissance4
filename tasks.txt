@@ -10,3 +10,7 @@ OK - Check si play() retourne false, et redemander le numéro de colonne si c'es
 Esthétique du code :
 OK - Rajouter des commentaires où il en manque (in ENGLISH please).
 OK - Espacer les opérateurs (et autres modifs pour la lisibilité).
+
+Taille custom de la grille :
+- Les nombres à deux chiffres prennent trop de place et dépassent de la grille. Il faut faire passer la largeur des colonnes de 2 à 3 caractères.
+- Scan les arguments de la ligne de commande et extraire les dimensions du jeu (si elles sont spécifiées).
