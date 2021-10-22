@@ -1,1 +1,1 @@
-gcc -o main -I . main.c winner.c
+gcc -o main -I . main.c puis4.c winner.c

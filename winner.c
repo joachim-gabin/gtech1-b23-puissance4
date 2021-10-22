@@ -1,13 +1,11 @@
 #include "winner.h"
 
-#include "puis4.h"
-
-static bool test_win_horizontal( char* table, char token, int row )
+static bool test_win_horizontal( table_t* table, char token, int row )
 {
 	int i = 0, count = 0;
-	while ( i < NUM_COLUMNS )
+	while ( i < table->num_columns )
 	{
-		if ( table[row * NUM_COLUMNS + i] == token ) count++;
+		if ( get_token_at( table, row, i ) == token ) count++;
 		else count = 0;
 
 		if ( count == 4 )
@@ -18,12 +16,12 @@ static bool test_win_horizontal( char* table, char token, int row )
 	return false;
 }
 
-static bool test_win_vertical( char* table, char token, int col )
+static bool test_win_vertical( table_t* table, char token, int col )
 {
 	int i = 0, count = 0;
-	while ( i < NUM_ROWS )
+	while ( i < table->num_rows )
 	{
-		if ( table[i * NUM_COLUMNS + col] == token ) count++;
+		if ( get_token_at( table, i, col ) == token ) count++;
 		else count = 0;
 
 		if ( count == 4 )
@@ -35,7 +33,7 @@ static bool test_win_vertical( char* table, char token, int col )
 }
 
 // Left to right diagonal win test.
-static bool test_win_ltor( char* table, char token, int row, int col )
+static bool test_win_ltor( table_t* table, char token, int row, int col )
 {
 	int min = row < col ? row : col;
 
@@ -44,9 +42,9 @@ static bool test_win_ltor( char* table, char token, int row, int col )
 	col -= min;
 
 	int count = 0;
-	while ( row < NUM_ROWS && col < NUM_COLUMNS )
+	while ( row < table->num_rows && col < table->num_columns )
 	{
-		if ( table[row * NUM_COLUMNS + col] == token ) count++;
+		if ( get_token_at( table, row, col ) == token ) count++;
 		else count = 0;
 
 		if ( count == 4 )
@@ -59,9 +57,9 @@ static bool test_win_ltor( char* table, char token, int row, int col )
 }
 
 // Right to left diagonal win test.
-static bool test_win_rtol( char* table, char token, int row, int col )
+static bool test_win_rtol( table_t* table, char token, int row, int col )
 {
-	int oneminus_col = (NUM_COLUMNS - 1) - col;
+	int oneminus_col = (table->num_columns - 1) - col;
 	int min = row < oneminus_col ? row : oneminus_col;
 
 	// Back up to the edge.
@@ -69,9 +67,9 @@ static bool test_win_rtol( char* table, char token, int row, int col )
 	col += min;
 
 	int count = 0;
-	while ( row < NUM_ROWS && col >= 0 )
+	while ( row < table->num_rows && col >= 0 )
 	{
-		if ( table[row * NUM_COLUMNS + col] == token ) count++;
+		if ( get_token_at( table, row, col ) == token ) count++;
 		else count = 0;
 
 		if ( count == 4 )
@@ -83,7 +81,7 @@ static bool test_win_rtol( char* table, char token, int row, int col )
 	return false;
 }
 
-bool test_win( char* table, char token, int row, int col )
+bool test_win( table_t* table, char token, int row, int col )
 {
 	if ( test_win_horizontal( table, token, row ) ) return true;
 	if ( test_win_vertical( table, token, col ) )   return true;
