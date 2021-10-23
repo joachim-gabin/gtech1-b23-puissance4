@@ -24,9 +24,30 @@ int turn = 0;
 
 
 
-int main( void )
+int main( int argc, char** argv )
 {
-	int rows = 10, cols = 14;
+	// Default size.
+	int rows = 6, cols = 7;
+
+	// Parse command line arguments to determine custom game size.
+	if ( argc == 3 )
+	{
+		char* end;
+		rows = strtol( argv[1], &end, 10 );
+		cols = strtol( argv[2], &end, 10 );
+
+		if ( rows <= 0 || cols <= 0 )
+		{
+			printf( "Incorrect row or column count specified.\n" );
+			return 2;
+		}
+	}
+	else if ( argc != 1 )
+	{
+		printf( "Incorrect number of arguments. Usage :\n" );
+		printf( "- puis4 [<num_rows> <num_columns>] \n" );
+		return 1;
+	}
 
 	printf( "Welcome to Puissance 4!\n" );
 	printf( "Game size is %i x %i\n", rows, cols );
@@ -77,7 +98,7 @@ int main( void )
 		turn++;
 		if ( turn == table.num_rows * table.num_columns )
 		{
-			printf( "\nFinished! There is no winner!" );
+			printf( "\nFinished! It's a tie!\n\n" );
 			break;
 		}
 
@@ -112,7 +133,7 @@ void display_table_delimiter()
 {
 	for ( int n = 0; n < table.num_columns; n++ )
 	{
-                printf( "--" );
+                printf( table.num_columns > 10 ? "---" : "--" );
         }
 	putchar( '-' );
 	putchar( '\n' );
@@ -132,7 +153,7 @@ void display_table()
                 for ( int c = 0; c < table.num_columns; c++ )
 		{
                         display_token( get_token_at( &table, r, c ) );
-			putchar( ' ' );
+			printf( table.num_columns > 10 ? "  " : " " );
                 }
                 putchar('\n');
         }
@@ -144,8 +165,8 @@ void display_table()
 
 	// Display column numbers.
 	putchar( ' ' );
-        for ( int num = 0; num < table.num_columns; num++ ){
-                printf( "%i ", num + 1 );
+        for ( int num = 1; num < table.num_columns + 1; num++ ){
+                printf( (table.num_columns > 10 && num < 10) ? "%i  " : "%i ", num );
         }
 
 	putchar( '\n' );
